@@ -6,7 +6,7 @@ for i=1:m
     for j=1:n
         if A(i,j)<0
             B(i,j)=0;
-        elseif A(i,j)>255
+        elseif 2*A(i,j)>255
             B(i,j)=255;
         else B(i,j)=2*A(i,j);
         end
