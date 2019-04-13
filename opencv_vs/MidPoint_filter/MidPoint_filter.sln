@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MidPoint_filter", "MidPoint_filter\MidPoint_filter.vcxproj", "{D2ED3A0D-3EA4-4DD6-BDB6-43440C941E57}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D2ED3A0D-3EA4-4DD6-BDB6-43440C941E57}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D2ED3A0D-3EA4-4DD6-BDB6-43440C941E57}.Debug|Win32.Build.0 = Debug|Win32
+		{D2ED3A0D-3EA4-4DD6-BDB6-43440C941E57}.Release|Win32.ActiveCfg = Release|Win32
+		{D2ED3A0D-3EA4-4DD6-BDB6-43440C941E57}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
