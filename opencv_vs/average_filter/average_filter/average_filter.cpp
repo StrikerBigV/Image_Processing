@@ -15,9 +15,9 @@ int convol(Mat imgG, int x,int y,vector<vector<int> > tem)
     int res=0,sum=0;
 	int i,j,k,l;
 	for(i=0,k=x-tem_m/2;i<tem_m;i++,k++)
-		for(j=0,l=y+tem_n/2;j<tem_n;j++,l--)
+		for(j=0,l=y-tem_n/2;j<tem_n;j++,l++)
 		{
-			res+=imgG.at<uchar>(k,l)*tem[i][j];
+			res+=imgG.at<uchar>(Point(k,l))*tem[i][j];
 			sum+=tem[i][j];
 		}
 	return res/sum;
@@ -25,13 +25,13 @@ int convol(Mat imgG, int x,int y,vector<vector<int> > tem)
 
 void average_filter(Mat imgG,Mat newImg, vector<vector<int> >tem)
 {
-	int mat_m=imgG.rows,mat_n=imgG.cols;
+	int mat_m=imgG.cols,mat_n=imgG.rows;
 	int tem_m=tem.size(),tem_n=tem[0].size();
     for(int i=tem_m/2;i<mat_m-tem_m/2;i++)
     {
         for(int j=tem_n/2;j<mat_n-tem_n/2;j++)
         {
-            newImg.at<uchar>(i,j)=convol(imgG,i,j,tem);
+            newImg.at<uchar>(Point(i,j))=convol(imgG,i,j,tem);
         }
     }
 }
@@ -52,6 +52,8 @@ int main()
 	cvtColor(img,imgG,CV_BGR2GRAY);
 	newImg=imgG.clone();
 	average_filter(imgG,newImg,tem);
+	imshow("imgG",imgG);
+	waitKey(1000);
 	imshow("average_filter",newImg);
 	waitKey(0);
 }

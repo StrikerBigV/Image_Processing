@@ -11,14 +11,14 @@ using namespace cv;
 
 void change_into_range(Mat img)
 {
-	int m=img.rows,n=img.cols;
-	int Min=img.at<uchar>(0,0),Max=Min;
+	int m=img.cols,n=img.rows;
+	int Min=img.at<uchar>(Point(0,0)),Max=Min;
     for(int i=0;i<m;i++)
     {
         for(int j=0;j<n;j++)
         {
-            if(img.at<uchar>(i,j)<Min) Min=img.at<uchar>(i,j);
-            if(img.at<uchar>(i,j)>Max) Max=img.at<uchar>(i,j);
+            if(img.at<uchar>(Point(i,j))<Min) Min=img.at<uchar>(Point(i,j));
+            if(img.at<uchar>(Point(i,j))>Max) Max=img.at<uchar>(Point(i,j));
         }
     }
 	Max-=Min;
@@ -26,17 +26,17 @@ void change_into_range(Mat img)
     {
         for(int j=0;j<n;j++)
         {
-			img.at<uchar>(i,j)-=Min;
-			img.at<uchar>(i,j)*=(255/Max);
+			img.at<uchar>(Point(i,j))-=Min;
+			img.at<uchar>(Point(i,j))*=(255/Max);
 		}
     }
 }
 void Log_transform(Mat img,double c)
 {
-	int m=img.rows,n=img.cols;
+	int m=img.cols,n=img.rows;
 	for(int i=0;i<m;i++)
 		for(int j=0;j<n;j++)
-			img.at<uchar>(i,j)=(uchar)(c*log((double)(1+img.at<uchar>(i,j))));
+			img.at<uchar>(Point(i,j))=(uchar)(c*log((double)(1+img.at<uchar>(Point(i,j)))));
 }
 
 int main()
@@ -49,8 +49,9 @@ int main()
 	newImg=imgG.clone();
 	Log_transform(newImg,c);
 	change_into_range(newImg);
+	imshow("imgG",imgG);
+	waitKey(50);
 	imshow("Log_transform",newImg);
-	//imshow("imgG",imgG);
 	waitKey(0);
 	return 0;
 }

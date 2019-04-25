@@ -1,4 +1,4 @@
-﻿生成启动时间为 2019/3/30 18:41:30。
+﻿生成启动时间为 2019/4/20 14:10:34。
      1>项目“D:\Image_Processing\opencv_vs\secondary_differential_filter\secondary_differential_filter\secondary_differential_filter.vcxproj”在节点 2 上(build 个目标)。
      1>InitializeBuildStatus:
          正在创建“Debug\secondary_differential_filter.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
@@ -23,4 +23,4 @@
 
 生成成功。
 
-已用时间 00:00:01.27
+已用时间 00:00:03.26

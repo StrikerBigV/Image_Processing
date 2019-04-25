@@ -15,37 +15,37 @@ int differential(Mat imgG, int x,int y,vector<vector<int> > tem)
     int res=0;
 	int i,j,k,l;
 	for(i=0,k=x-tem_m/2;i<tem_m;i++,k++)
-		for(j=0,l=y+tem_n/2;j<tem_n;j++,l--)
-			res+=imgG.at<uchar>(k,l)*tem[i][j];
+		for(j=0,l=y-tem_n/2;j<tem_n;j++,l++)
+			res+=imgG.at<uchar>(Point(k,l))*tem[i][j];
 	return res;
 }
 
 void secondary_differential_filter(Mat imgG,vector<vector<int> >&matrix, vector<vector<int> >tem)
 {
-	int mat_m=imgG.rows,mat_n=imgG.cols;
+	int mat_m=imgG.cols,mat_n=imgG.rows;
 	int tem_m=tem.size(),tem_n=tem[0].size();
     for(int i=tem_m/2;i<mat_m-tem_m/2;i++)
     {
         for(int j=tem_n/2;j<mat_n-tem_n/2;j++)
         {
-            matrix[i][j]=(int)imgG.at<uchar>(i,j)-differential(imgG,i,j,tem);
+            matrix[i][j]=differential(imgG,i,j,tem);
         }
     }
 }
 void Matrix2Mat(vector<vector<int> >matrix,Mat &img)
 {
 	int m=matrix.size(),n=matrix[0].size();
-	img=Mat(m,n,CV_8U,Scalar(0));
+	img=Mat(n,m,CV_8U,Scalar(0));
 	for(int i=0;i<m;i++)
 		for(int j=0;j<n;j++)
-			img.at<uchar>(i,j)=matrix[i][j];
+			img.at<uchar>(Point(i,j))=matrix[i][j];
 }
 void Mat2Matrix(Mat img,vector<vector<int> >&matrix)
 {
-	int m=img.rows,n=img.cols;
+	int m=img.cols,n=img.rows;
 	for(int i=0;i<m;i++)
 		for(int j=0;j<n;j++)
-			matrix[i][j]=img.at<uchar>(i,j);
+			matrix[i][j]=img.at<uchar>(Point(i,j));
 }
 void change_into_range(vector<vector<int> >&matrix)
 {
@@ -81,18 +81,30 @@ int main()
 			cin>>tem[i][j];
 		getchar();
 	}
-	Mat img,imgG,newImg;
-	img=imread("D:\\Image\\2.jpg");
+	Mat img,imgG,edge,newImg;
+	img=imread("D:\\Image\\8.tif");
 	cvtColor(img,imgG,CV_BGR2GRAY);
-	vector<vector<int> >matrix(img.rows,vector<int>(img.cols));
+	vector<vector<int> >matrix(img.cols,vector<int>(img.rows));
 	Mat2Matrix(imgG,matrix);
 	secondary_differential_filter(imgG,matrix,tem);
+
+	vector<vector<int> >newMatrix(img.cols,vector<int>(img.rows));
+	int mat_m=imgG.cols,mat_n=imgG.rows;
+    for(int i=tem_m/2;i<mat_m-tem_m/2;i++)
+    {
+        for(int j=tem_n/2;j<mat_n-tem_n/2;j++)
+        {
+            newMatrix[i][j]=imgG.at<uchar>(Point(i,j))- matrix[i][j];
+        }
+    }
+
 	change_into_range(matrix);
-	Matrix2Mat(matrix,newImg);
-	imshow("secodary_differential_filter",newImg);
-	//for(int i=0;i<img.rows;i++)
-	//{	for(int j=0;j<img.cols;j++)
-		//	cout<<matrix[i][j]<<" ";
-	//}
+	change_into_range(newMatrix);
+	Matrix2Mat(matrix,edge);
+	Matrix2Mat(newMatrix,newImg);
+	imshow("imgG",imgG);
+	waitKey(50);
+	//imshow("edge",edge);
+	imshow("newImg",newImg);
 	waitKey(0);
 }
